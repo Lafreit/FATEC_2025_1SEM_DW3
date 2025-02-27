@@ -25,3 +25,36 @@ lista.append(100)
 lista.append([1,2,3])
 print(lista[-1][1])
 
+''' Tuplas são objetos imutáveis'''
+
+tupla = (1,2,3)
+for item in tupla:
+    print(item)
+
+lista2 = list(tupla)
+lista2.append(4)
+lista2.append(5)
+tupla = tuple(lista2)
+
+
+lista3 = []
+for x in range(10):
+    lista3.append(x)
+    lista3.append(x + 1)
+
+''' Desafio: Remover todos os itens duplicados de lista3'''
+
+listTemp = []
+for x in lista3:
+    if x not in listTemp:
+        listTemp.append(x)
+
+''' O mesmo desafio com set '''
+lista4 = list(set(lista3))
+
+''' Dicionário '''
+fatec = {}
+fatec['orlando'] = ['DW2','DW3']
+fatec['nilton'] = 'algoritmo'
+fatec['thiago'] = ('Banco NoSQL','CoordenadorSI')
+fatec['horarios'] = {'orlando':['DW2','DW3'],'nilton':'Algoritmo'}
