@@ -1,0 +1,20 @@
+Linux
+=====
+
+virtualenv -p python3 <<nome_ambiente>>
+source <<nome_ambiente>>/bin/activate
+pip install <<pacotes_necessários>>
+pip freeze > requirements.txt
+
+Windows
+=======
+virtualenv  <<nome_ambiente>>
+cd   <<nome_ambiente>>
+cd Scripts
+rodar activate.bat
+pip install <<pacotes_necessários>>
+pip freeze > requirements.txt
+
+ou
+python -m virtualenv   <<nome_ambiente>>
+
