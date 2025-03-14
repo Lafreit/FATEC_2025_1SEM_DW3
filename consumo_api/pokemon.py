@@ -4,7 +4,7 @@ import csv
 URL_BASE = 'https://pokeapi.co/api/v2/pokemon/'
 
 list_pokemon = []
-for i in range(1020, 1026):
+for i in range(1, 1026):
     URL = URL_BASE + str(i)
     try:
         dado = requests.get(URL).json()
