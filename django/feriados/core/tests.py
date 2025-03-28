@@ -9,3 +9,7 @@ class NatalTest(TestCase):
     
     def test_texto(self):
         self.assertContains(self.resp, 'Natal')
+    
+    def test_template_natal(self):
+        self.assertTemplateUsed(self.resp, 'natal.html')
+        self.assertTemplateUsed(self.resp, 'natal2.html')
