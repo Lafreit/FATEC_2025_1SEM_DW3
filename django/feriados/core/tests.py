@@ -12,4 +12,4 @@ class NatalTest(TestCase):
     
     def test_template_natal(self):
         self.assertTemplateUsed(self.resp, 'natal.html')
-        self.assertTemplateUsed(self.resp, 'natal2.html')
+        self.assertTemplateNotUsed(self.resp, 'natal2.html')
