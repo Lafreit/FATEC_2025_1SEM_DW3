@@ -23,7 +23,7 @@ def listar_feriados(request):
 
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
-from core.forms import FeriadoForm
+from core.forms import FeriadoForm, FeriadoForm2
 
 def adicionar_feriado(request):
     if request.method == 'POST':
@@ -32,5 +32,5 @@ def adicionar_feriado(request):
             FeriadoModel.objects.create(**form.cleaned_data)
             return redirect('listar_feriados')
     else:
-        form = FeriadoForm()
+        form = FeriadoForm2()
     return render(request, 'adicionar_feriado.html', {'form':form})
