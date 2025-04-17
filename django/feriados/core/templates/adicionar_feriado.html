@@ -8,8 +8,15 @@
         <form method="post">
             {% csrf_token %}
         
-            {{ form.as_div }}
-
+            {{ form.nome.label_tag }}<br>
+            {{ form.nome }}<br>
+            <br>
+            {{ form.dia.label_tag }}<br>
+            {{ form.dia }}<br>
+            <br>
+            {{ form.mes.label_tag }}<br>
+            {{ form.mes }}<br>
+            <br>
             <button type="submit">Salvar</button>
         </form>
         <br>
