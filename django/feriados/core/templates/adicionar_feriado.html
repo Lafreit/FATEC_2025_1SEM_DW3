@@ -1,0 +1,24 @@
+<html lang="pt_br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Feriados</title>
+    </head>
+    <body>
+        <h1>Cadastro de Feriado</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="nome">Nome do Feriado:</label><br>
+            <input type="text" id="nome" name="nome"><br><br>
+
+            <label for="dia">Dia:</label><br>
+            <input type="number" id="dia" name="dia" min="1" max="31"><br><br>
+
+            <label for="mes">Mês:</label><br>
+            <input type="number" id="mes" name="mes" min="1" max="12"><br><br>
+
+            <button type="submit">Salvar</button>
+        </form>
+        <br>
+        <a href="{% url 'listar_feriados' %}">Ver todos os feriados</a>
+    </body>
+</html>
