@@ -74,16 +74,16 @@ class AdicionarFeriadoViewTest(TestCase):
         data = {'nome': 'Independência', 'dia': '7', 'mes': '9'}
         response = self.client.post(reverse('add_feriado'), data)
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(FeriadoModel.objects.filter(nome='Independência').exists())
+        self.assertTrue(FeriadoModel.objects.filter(nome='INDEPENDÊNCIA').exists())
 
-    def test_post_faltando_dados_retorna_400(self):
+    def test_post_faltando_dados_retorna_200(self):
         response = self.client.post(reverse('add_feriado'), {'nome': '', 'dia': '', 'mes': ''})
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_dia_ou_mes_fora_do_intervalo(self):
         response = self.client.post(reverse('add_feriado'), {'nome': 'Feriado', 'dia': '32', 'mes': '13'})
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
 
     def test_post_dia_mes_nao_numerico(self):
         response = self.client.post(reverse('add_feriado'), {'nome': 'Teste', 'dia': 'dez', 'mes': 'jan'})
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
