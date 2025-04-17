@@ -7,14 +7,8 @@
         <h1>Cadastro de Feriado</h1>
         <form method="post">
             {% csrf_token %}
-            <label for="nome">Nome do Feriado:</label><br>
-            <input type="text" id="nome" name="nome"><br><br>
-
-            <label for="dia">Dia:</label><br>
-            <input type="number" id="dia" name="dia" min="1" max="31"><br><br>
-
-            <label for="mes">Mês:</label><br>
-            <input type="number" id="mes" name="mes" min="1" max="12"><br><br>
+        
+            {{ form.as_div }}
 
             <button type="submit">Salvar</button>
         </form>
