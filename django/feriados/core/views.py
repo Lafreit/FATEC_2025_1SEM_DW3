@@ -7,7 +7,8 @@ def feriado(requests):
     hoje = datetime.today()
     qs = FeriadoModel.objects.filter(mes=hoje.month)
     qs = qs.filter(dia=hoje.day)
-    teste()
+    # Comentado para evitar erros em uma máquina sem MongoDB
+    # teste()
     if len(qs) > 0:
         contexto = {'feriado': True, 'nome':qs[0].nome}
     else:

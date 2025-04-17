@@ -41,4 +41,4 @@ class FeriadoModelTest(TestCase):
     
     def test_name(self):
         feriado_no_banco = FeriadoModel.objects.first()
-        self.assertEquals(feriado_no_banco.nome, 'Natal')
+        self.assertEqual(feriado_no_banco.nome, 'Natal')
