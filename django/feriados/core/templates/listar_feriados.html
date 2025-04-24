@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feriados Cadastrados</title>
+</head>
+<body>
+    <h1>Lista de Feriados</h1>
+    <ul>
+        {% for feriado in feriados %}
+            <li>{{ feriado.nome }} - {{ feriado.dia }}/{{ feriado.mes }}</li>
+        {% empty %}
+            <li>Nenhum feriado cadastrado.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_feriado' %}">Adicionar novo feriado</a>
+</body>
+</html>

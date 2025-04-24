@@ -1,0 +1,25 @@
+<html lang="pt_br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Feriados</title>
+    </head>
+    <body>
+        <h1>Cadastro de Feriado</h1>
+        <form method="post">
+            {% csrf_token %}
+        
+            {{ form.nome.label_tag }}<br>
+            {{ form.nome }}<br>
+            <br>
+            {{ form.dia.label_tag }}<br>
+            {{ form.dia }}<br>
+            <br>
+            {{ form.mes.label_tag }}<br>
+            {{ form.mes }}<br>
+            <br>
+            <button type="submit">Salvar</button>
+        </form>
+        <br>
+        <a href="{% url 'listar_feriados' %}">Ver todos os feriados</a>
+    </body>
+</html>
