@@ -1,7 +1,15 @@
 from django.shortcuts import render
+from datetime import datetime
+from core.models import FeriadoModel
+from core.service import teste
 
-def natal(requests):
-    contexto = {'natal': False, 'carnaval':False}
-    # Fazendo uso do debugger
-    # import ipdb; ipdb.set_trace()
-    return render(requests, "natal.html", contexto)
+def feriado(requests):
+    hoje = datetime.today()
+    qs = FeriadoModel.objects.filter(mes=hoje.month)
+    qs = qs.filter(dia=hoje.day)
+    teste()
+    if len(qs) > 0:
+        contexto = {'feriado': True, 'nome':qs[0].nome}
+    else:
+        contexto = {'feriado': False}
+    return render(requests, "feriado.html", contexto)

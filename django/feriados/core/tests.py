@@ -2,7 +2,7 @@ from django.test import TestCase
 from core.models import FeriadoModel
 from datetime import datetime
 
-class NatalTest(TestCase):
+class SemFeriadoTest(TestCase):
     def setUp(self):
         self.resp = self.client.get('/')
 
@@ -10,12 +10,27 @@ class NatalTest(TestCase):
         self.assertEqual(self.resp.status_code, 200)
     
     def test_texto(self):
-        self.assertContains(self.resp, 'Natal')
+        self.assertContains(self.resp, 'Não é feriado')
     
-    def test_template_natal(self):
-        self.assertTemplateUsed(self.resp, 'natal.html')
+    def test_template(self):
+        self.assertTemplateUsed(self.resp, 'feriado.html')
         self.assertTemplateNotUsed(self.resp, 'natal2.html')
 
+
+class Feriado_TDD_Test(TestCase):
+    def setUp(self):
+        hoje = datetime.today()
+        FeriadoModel.objects.create(nome='Dia do TDD',dia=hoje.day, mes=hoje.month)
+        self.resp = self.client.get('/')
+
+    def test_200_response(self):
+        self.assertEqual(self.resp.status_code, 200)
+    
+    def test_texto(self):
+        self.assertContains(self.resp, 'Dia do TDD')
+    
+    def test_template(self):
+        self.assertTemplateUsed(self.resp, 'feriado.html')
 
 class FeriadoModelTest(TestCase):
     def setUp(self):
