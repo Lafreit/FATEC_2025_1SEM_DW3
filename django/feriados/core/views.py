@@ -34,3 +34,26 @@ def adicionar_feriado(request):
     else:
         form = FeriadoForm2()
     return render(request, 'adicionar_feriado.html', {'form':form})
+
+
+from django.shortcuts import get_object_or_404
+
+def deletar_feriado(request, feriado_id):
+    feriado = get_object_or_404(FeriadoModel, id=feriado_id)
+    if request.method == 'POST':
+        feriado.delete()
+        return redirect('listar_feriados')
+    return render(request, 'confirmar_delete.html', {'feriado': feriado})
+
+
+def atualizar_feriado(request, feriado_id):
+    feriado = get_object_or_404(FeriadoModel, id=feriado_id)
+    if request.method == 'POST':
+        form = FeriadoForm2(request.POST, instance=feriado)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_feriados')
+    else:
+        form = FeriadoForm2(instance=feriado)
+    return render(request, 'atualizar_feriado.html', {'form': form, 'feriado': feriado})
+
