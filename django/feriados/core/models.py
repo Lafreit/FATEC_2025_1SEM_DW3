@@ -15,3 +15,4 @@ class FeriadoModel(models.Model):
     class Meta:
         verbose_name = 'Feriado'
         verbose_name_plural = 'Feriados'
+        ordering = ('mes', '-dia')
