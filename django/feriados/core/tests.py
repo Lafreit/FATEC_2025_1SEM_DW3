@@ -87,3 +87,38 @@ class AdicionarFeriadoViewTest(TestCase):
     def test_post_dia_mes_nao_numerico(self):
         response = self.client.post(reverse('add_feriado'), {'nome': 'Teste', 'dia': 'dez', 'mes': 'jan'})
         self.assertEqual(response.status_code, 200)
+
+
+class DeletarFeriadoViewTest(TestCase):
+    def setUp(self):
+        self.feriado = FeriadoModel.objects.create(nome="Teste Feriado", dia=1, mes=1)
+
+    def test_deletar_feriado_get(self):
+        response = self.client.get(reverse('deletar_feriado', args=[self.feriado.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Tem certeza que deseja excluir")
+
+    def test_deletar_feriado_post(self):
+        response = self.client.post(reverse('deletar_feriado', args=[self.feriado.id]))
+        self.assertRedirects(response, reverse('listar_feriados'))
+        self.assertFalse(FeriadoModel.objects.filter(id=self.feriado.id).exists())
+
+
+class AtualizarFeriadoViewTest(TestCase):
+    def setUp(self):
+        self.feriado = FeriadoModel.objects.create(nome="Teste Feriado", dia=1, mes=1)
+
+    def test_atualizar_feriado_get(self):
+        response = self.client.get(reverse('atualizar_feriado', args=[self.feriado.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.feriado.nome)
+
+    def test_atualizar_feriado_post_valido(self):
+        novo_dado = {'nome': 'Feriado Atualizado', 'dia': 25, 'mes': 12}
+        response = self.client.post(reverse('atualizar_feriado', args=[self.feriado.id]), data=novo_dado)
+        self.assertRedirects(response, reverse('listar_feriados'))
+
+        feriado_atualizado = FeriadoModel.objects.get(id=self.feriado.id)
+        self.assertEqual(feriado_atualizado.nome, 'FERIADO ATUALIZADO')  # Se o form ou model aplica .upper()
+        self.assertEqual(feriado_atualizado.dia, 25)
+        self.assertEqual(feriado_atualizado.mes, 12)

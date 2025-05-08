@@ -1,17 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Feriados Cadastrados</title>
-</head>
-<body>
-    <h1>Lista de Feriados</h1>
-    <ul>
+<h2>Lista de Feriados</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for feriado in feriados %}
-            <li>{{ feriado.nome }} - {{ feriado.dia }}/{{ feriado.mes }}</li>
+        <tr>
+            <td>{{ feriado.nome }}</td>
+            <td>{{ feriado.dia }}/{{ feriado.mes }}</td>
+            <td>
+                <a href="{% url 'atualizar_feriado' feriado.id %}">Editar</a> |
+                <a href="{% url 'deletar_feriado' feriado.id %}">Excluir</a>
+            </td>
+        </tr>
         {% empty %}
-            <li>Nenhum feriado cadastrado.</li>
+        <tr>
+            <td colspan="3">Nenhum feriado cadastrado.</td>
+        </tr>
         {% endfor %}
-    </ul>
-    <a href="{% url 'add_feriado' %}">Adicionar novo feriado</a>
-</body>
-</html>
+    </tbody>
+</table>
+
+<a href="{% url 'add_feriado' %}">Adicionar novo feriado</a>
