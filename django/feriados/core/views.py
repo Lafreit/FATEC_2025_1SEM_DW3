@@ -2,6 +2,7 @@ from django.shortcuts import render
 from datetime import datetime
 from core.models import FeriadoModel
 from core.service import teste
+from django.http import JsonResponse
 
 def feriado(requests):
     hoje = datetime.today()
@@ -57,3 +58,7 @@ def atualizar_feriado(request, feriado_id):
         form = FeriadoForm2(instance=feriado)
     return render(request, 'atualizar_feriado.html', {'form': form, 'feriado': feriado})
 
+
+def listar_feriados_json(request):
+    feriados = FeriadoModel.objects.all().values('id', 'nome', 'dia', 'mes')
+    return JsonResponse(list(feriados),safe=False)
