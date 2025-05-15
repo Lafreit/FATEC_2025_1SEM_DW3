@@ -122,3 +122,52 @@ class AtualizarFeriadoViewTest(TestCase):
         self.assertEqual(feriado_atualizado.nome, 'FERIADO ATUALIZADO')  # Se o form ou model aplica .upper()
         self.assertEqual(feriado_atualizado.dia, 25)
         self.assertEqual(feriado_atualizado.mes, 12)
+
+
+from rest_framework.test import APITestCase, APIClient
+from django.urls import reverse
+from rest_framework import status
+from django.contrib.auth.models import User
+from core.models import FeriadoModel
+
+class FeriadoAPITests(APITestCase):
+    def setUp(self):
+        self.client = APIClient()
+        # Cria um usuário e token (caso use autenticação)
+        self.user = User.objects.create_user(username='admin', password='123')
+        self.client.force_authenticate(user=self.user)
+        self.feriado = FeriadoModel.objects.create(nome="Natal", dia=25, mes=12)
+    
+    def test_listar_feriados(self):
+        url = reverse('api_feriados_list_create') # Ex: 'api/feriados/'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertGreaterEqual(len(response.data), 1)
+    
+    def test_criar_feriado(self):
+        url = reverse('api_feriados_list_create')
+        data = {"nome": "Ano Novo", "dia": 1, "mes": 1}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_detalhar_feriado(self):
+        url = reverse('api_feriados_detail', args=[self.feriado.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["nome"], "Natal")
+    
+    def test_atualizar_feriado(self):
+        url = reverse('api_feriados_detail', args=[self.feriado.id])
+        data = {"nome": "Natal Atualizado", "dia": 25, "mes": 12}
+        response = self.client.put(url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.feriado.refresh_from_db()
+        self.assertEqual(self.feriado.nome, "Natal Atualizado")
+
+    def test_deletar_feriado(self):
+        url = reverse('api_feriados_detail', args=[self.feriado.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(FeriadoModel.objects.filter(id=self.feriado.id).exists())
+    
+    
