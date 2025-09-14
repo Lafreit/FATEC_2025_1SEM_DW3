@@ -1,0 +1,11 @@
+<h1>Clientes</h1>
+<a href="{% url 'criar_cliente' %}">Novo Cliente</a>
+<ul>
+  {% for cliente in clientes %}
+    <li>
+      {{ cliente.nome }} - {{ cliente.email }}
+      <a href="{% url 'editar_cliente' cliente.pk %}">Editar</a>
+      <a href="{% url 'excluir_cliente' cliente.pk %}">Excluir</a>
+    </li>
+  {% endfor %}
+</ul>
